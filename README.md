@@ -33,6 +33,12 @@ singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.0.0
     ``` 
     ![Screenshot of staging.sh](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/staging_sh_screenshot.PNG?raw=true)
 
+5. Save the changes to the staging.sh file and run it:
+``` 
+sbatch staging.sh
+``` 
+6. Once the staging script is over the restructured MACSima data sets will be found in the *output_dir*.  The data of a cycle will be written into two ome.tiff files, one file containes the marker signal (src- S) and the other one the backround signal (src- B).
+
 
 
 
