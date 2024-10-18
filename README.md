@@ -6,11 +6,11 @@ This is work on progress, currently only the staging script is available (stagin
 ``` 
 singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.0.0
 ```
-2. Create a tab separated sample array file (e.g. *acquisitions_array.tsv*) with two columns: ArrayTaskID and Sample.  The former is an integer number that represents the TaskID, the latter is the absolute path of the folder that contains the cycles of the acquisition.
+2. Create a tab separated sample array file (e.g. *acquisitions.tsv*) with two columns: ArrayTaskID and Sample.  The former is an integer number that represents the TaskID, the latter is the absolute path of the folder that contains the cycles of the acquisition.
 
 ![Screenshot of the sample array file](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/sample_array_tsv_example.PNG)
 
-![Screenshot of the sample array file](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/sample_array_tsv_example.PNG)
+![Screenshot of cycles inside acquisition_A](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/acquisition_A.png?raw=true)
 
 
 3. Create a directory for the outputs of the staging tool, e.g. *output_dir*.  
@@ -31,6 +31,7 @@ singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.0.0
     ``` 
     output_dir=/home/output_dir
     ``` 
+    ![Screenshot of staging.sh](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/staging_sh_screenshot.PNG?raw=true)
 
 
 
