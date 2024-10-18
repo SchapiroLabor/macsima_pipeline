@@ -7,7 +7,9 @@ This is work on progress, currently only the staging script is available (stagin
 singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.0.0
 ```
 
-2. Create a tsv file with the absolute path of all the acquisitons on which the staging will be applied.
+2. Create a tab separated file (.tsv) file with two columns: ArrayTaskID and Sample.  The former is an integer number that represents the TaskID, the latter is the absolute path of the folder that contains the cycles of the acquisition.
+
+![Screenshot of the sample array file](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/sample_array_tsv_example.PNG) 
 
 ```
 ArrayTaskID Sample
