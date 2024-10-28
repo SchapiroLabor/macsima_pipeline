@@ -75,9 +75,8 @@ def ill_correction(img_path,ffp_path):
 
 def apply_correction(img_path,out_dir):
 
-    img_name=img_path.stem + img_path.suffix
     img_corr=ill_correction(img_path,ill_profile(img_path))
-    output_img_path=out_dir / img_name
+    output_img_path=out_dir / '{stem}_{tag}_{file_format}'.format(stem=img_path.stem ,file_format=img_path.suffix,tag='corr')
     ome_metadata=tifff.tiffcomment(img_path)
     tifff.imwrite( output_img_path ,img_corr )
     tifff.tiffcomment(output_img_path,ome_metadata)
