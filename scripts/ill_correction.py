@@ -68,7 +68,7 @@ def ill_correction(img_path,ffp_path):
         ffp_tile=np.tile(ffp[:,:,ch],(img.shape[0],1,1))
         img_corrected= img.astype(float) / ffp_tile
 
-        canvas[range_of_interest,:,:]=np.uint16(img_corrected)
+        canvas[range_of_interest,:,:]=np.uint16( np.clip(img_corrected,0,65535) )
 
 
     return canvas
