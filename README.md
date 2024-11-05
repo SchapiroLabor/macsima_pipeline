@@ -10,24 +10,20 @@ The second step is simply the execution of MCMICRO with a specific set of parame
 
 
 
-1. **Staging**: 
-    - download the container (v1.1.0) of macsima2mc  with the following command: ``` singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.1.0 ```
-     
-    
-    
-    - Create a tab separated sample array file (e.g. *acquisitions.tsv*) with two columns: ArrayTaskID and Sample.  Each row of the first column is an integer number that represents the TaskID.  The rows of the second column are the absolute path of the folder that contains the **n** cycles of the acquisition.  As of now, the content of this latter folder contains multiple folders with the name x_Cycle_**n**.  See the images below for reference of the *acquisitions.tsv* file and the cycles folder, in this representative example we apply the pipeline to the cycles in the folder *mydir/acquisition_A*.
+1. **Staging**:
 
-![Screenshot of the sample array file](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/sample_array_tsv_example.PNG)
+    1. download the container (v1.1.0) of macsima2mc  with the following command: ``` singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.1.0 ``` .
 
-![Screenshot of cycles inside acquisition_A](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/acquisition_A.png?raw=true)
+    2. Create a tab separated sample array file (e.g. *acquisitions.tsv*) with two columns: ArrayTaskID and Sample.  Each row of the first column is an integer number that represents the TaskID.  The rows of the second column are the absolute path of the folder that contains the **n** cycles of the acquisition.  As of now, the content of this latter folder contains multiple folders with the name x_Cycle_**n**.  See the images below for reference of the *acquisitions.tsv* file and the cycles folder, in this representative example we apply the pipeline to the cycles in the folder *mydir/acquisition_A*.
+
+    ![Screenshot of the sample array file](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/sample_array_tsv_example.PNG)
+
+    ![Screenshot of cycles inside acquisition_A](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/acquisition_A.png?raw=true)
 
 
-3. Create a directory for the outputs of the staging tool, e.g. *output_dir*.  
-4. Open the staging.sh file and specify the following inputs:
-    -SBATCH --array=1 : range of samples to take from the ArrayTaskID, in this example we only have ID 1, if n samples then,
-    ``` 
-    SBATCH --array=1-n
-    ``` 
+    3. Create a directory for the outputs of the staging tool, e.g. *output_dir*.  
+    4. Open the staging.sh file and specify the following inputs:
+        -SBATCH --array=1 : range of samples from the ArrayTaskID on which the staging will be applied.  In this example we only have ID 1, if m samples then,``` SBATCH --array=1-m``` .
     -acquisitions : path to the sample array file
     ``` 
     acquisitions=/myarrays/acquisitions_array.tsv
