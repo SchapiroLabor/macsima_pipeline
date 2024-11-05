@@ -1,21 +1,21 @@
 # MACSIMA pipeline for hpc usage
-This repo describes how to use MCMICRO [MCMICRO] (https://mcmicro.org/) to process multiplexed-images generated with the MACSima platform.  The instructions below focus on the execution of the pipeline in the hpc.
+This repo describes how to use [MCMICRO] (https://mcmicro.org/) to process multiplexed-images generated with the MACSima platform.  The instructions below focus on the execution of the pipeline in the hpc.
 The repo contains the necessary bash scripts (sh) and config files to execute the pipeline.
 
 This repo has been created as a temporary solution to process MACSima data with the current [MCMICRO](https://mcmicro.org/) version.  A more robust solution
 ## Usage instructions:
-Two steps are to be implemented. In the first one the raw tiles are staged so they can be directly used as input for ASHLAR.  ASHLAR is the registration and stitching algorithm used by MCMICRO.  What the staging step does is reorder the raw tiles
+Two steps are to be implemented. In the first one the raw tiles are staged so they can be directly used as input for ASHLAR, which is the registration and stitching algorithm used by MCMICRO.  What the staging step does is reorder the raw tiles of a cycle 
 
 The second step is simply the execution of MCMICRO with a specific set of parameters.
 
 
 
 1. **Staging**: 
-    - download the container (v1.1.0) of macsima2mc with the following command:
+    - download the container (v1.1.0) of macsima2mc  with the following command:
 ``` 
 singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.1.0
 ```
-    - Create a tab separated sample array file (e.g. *acquisitions.tsv*) with two columns: ArrayTaskID and Sample.  The former is an integer number that represents the TaskID, the latter is the absolute path of the folder that contains the cycles of the acquisition.
+    - Create a tab separated sample array file (e.g. *acquisitions.tsv*) with two columns: ArrayTaskID and Sample.  Each row of the first column is an integer number that represents the TaskID.  The rows of the second column are the absolute path of the folder that contains the **n** cycles of the acquisition.  As of now, the content of this latter folder contains multiple folders with the name x_Cycle_**n**.  See the images below for reference of the *acquisitions.tsv* file and the cycles folder, in this representative example we apply the pipeline to the cycles in the folder *mydir/acquisition_A*.
 
 ![Screenshot of the sample array file](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/sample_array_tsv_example.PNG)
 
