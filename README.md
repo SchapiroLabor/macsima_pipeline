@@ -1,12 +1,21 @@
 # MACSIMA pipeline for hpc usage
-## Bashscripts to stage, apply illumination correction and run mcmicro on MACSima data
+This repo describes how to use MCMICRO [MCMICRO] (https://mcmicro.org/) to process multiplexed-images generated with the MACSima platform.  The instructions below focus on the execution of the pipeline in the hpc.
+The repo contains the necessary bash scripts (sh) and config files to execute the pipeline.
 
-This is work on progress, currently only the staging script is available (staging.sh).  The steps to use this are:
-1. download the container of macsima2mc with the following command:
+This repo has been created as a temporary solution to process MACSima data with the current [MCMICRO](https://mcmicro.org/) version.  A more robust solution
+## Usage instructions:
+Two steps are to be implemented. In the first one the raw tiles are staged so they can be directly used as input for ASHLAR.  ASHLAR is the registration and stitching algorithm used by MCMICRO.  What the staging step does is reorder the raw tiles
+
+The second step is simply the execution of MCMICRO with a specific set of parameters.
+
+
+
+1. **Staging**: 
+    - download the container (v1.1.0) of macsima2mc with the following command:
 ``` 
-singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.0.0
+singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.1.0
 ```
-2. Create a tab separated sample array file (e.g. *acquisitions.tsv*) with two columns: ArrayTaskID and Sample.  The former is an integer number that represents the TaskID, the latter is the absolute path of the folder that contains the cycles of the acquisition.
+    - Create a tab separated sample array file (e.g. *acquisitions.tsv*) with two columns: ArrayTaskID and Sample.  The former is an integer number that represents the TaskID, the latter is the absolute path of the folder that contains the cycles of the acquisition.
 
 ![Screenshot of the sample array file](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/sample_array_tsv_example.PNG)
 
