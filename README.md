@@ -1,32 +1,33 @@
 # MACSIMA pipeline for hpc usage
-This repo describes how to use [MCMICRO] (https://mcmicro.org/) to process multiplexed-images generated with the MACSima platform.  The instructions below focus on the execution of the pipeline in the hpc.
+This repo describes how to use [MCMICRO] (https://mcmicro.org/) to process multiplexed-images generated with the MACSima platform.  The instructions below focus on the execution of the pipeline in the hpc and slurm as job scheduler.
 The repo contains the necessary bash scripts (sh) and config files to execute the pipeline.
 
-This repo has been created as a temporary solution to process MACSima data with the current [MCMICRO](https://mcmicro.org/) version.  A more robust solution
+This repo has been created as a temporary solution to process MACSima data with the current [MCMICRO](https://mcmicro.org/) version.  A more usage convenient solution is on the works as part of the upcoming [nf-core/mcmicro](https://nf-co.re/mcmicro/dev).
+
 ## Usage instructions:
-Two steps are to be implemented. In the first one the raw tiles are staged so they can be directly used as input for ASHLAR, which is the registration and stitching algorithm used by MCMICRO.  What the staging step does is reorder the raw tiles of a cycle, all tiles of a cycle and common rack, roi,well and exposure time will be written in the single file with their corresponding ome metadata.  
+Two steps are to be implemented. In the first one the raw tiles are staged so they can be directly used as input for ASHLAR, which is the registration and stitching algorithm used by MCMICRO. 
+
+What the staging step does is reorder the raw tiles of a cycle, all tiles of a cycle that are acquired with a common rack, roi,well and exposure level will be written in the single file with their corresponding ome metadata.  
 
 The second step is simply the execution of MCMICRO with a specific set of parameters.
 
-
-
 1. **Staging**
 
-    1. **Download the container (v1.1.0) of macsima2mc**  with the following command:
+    1. Download the container (v1.1.0) of macsima2mc  with the following command:
     ``` 
     singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.1.0 
     ```
 
-    2. **Create a tab separated sample array file** (e.g. *acquisitions.tsv*) with two columns: ArrayTaskID and Sample.  Each row of the first column is an integer number that represents the TaskID.  The rows of the second column are the absolute path of the folder that contains the **N** cycles of the acquisition.  As of now, the content of this latter folder contains multiple folders with the name x_Cycle**N**.  See the images below for reference of the *acquisitions.tsv* file and the cycles folder, in this representative example we apply the pipeline to the cycles in the folder *mydir/acquisition_A*.
+    2. Create a tab separated sample array file (e.g. *acquisitions.tsv*) with two columns: ArrayTaskID and Sample.  Each row of the first column is an integer number that represents the TaskID.  The rows of the second column are the absolute path of the folder that contains the *N* cycles of the acquisition.  As of now, the content of this latter folder contains multiple folders with the name x_Cycle*N*.  See the images below for reference of the *acquisitions.tsv* file and the cycles folder, in this representative example we apply the pipeline to the cycles in the folder *mydir/acquisition_A*.
 
     ![Screenshot of the sample array file](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/sample_array_tsv_example.PNG)
 
     ![Screenshot of cycles inside acquisition_A](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/acquisition_A.png?raw=true)
 
 
-    3. **Create a directory for the outputs** of macsima2mc, e.g. *output_dir*. 
+    3. Create a directory for the outputs of macsima2mc, e.g. *output_dir*. 
 
-    4. **Specify the inputs**, open the staging.sh file (see figure below,red arrows) and specify the following inputs:
+    4. Specify the inputs, open the staging.sh file (see figure below,red arrows) and specify the following inputs:
 
         - SBATCH --array=1 : range of samples from the ArrayTaskID on which the staging will be applied.  In this example we only have ID 1. If m samples then,```SBATCH --array=1-m```.
 
@@ -37,11 +38,11 @@ The second step is simply the execution of MCMICRO with a specific set of parame
 
         ![Screenshot of staging.sh](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/staging_sh_screenshot.PNG?raw=true)
 
-    5. **Save the changes to the staging.sh file and run it**:
+    5. Save the changes to the staging.sh file and run it:
     ``` 
     sbatch staging.sh
     ``` 
-    6. **Outputs**, once the staging script is over, the restructured MACSima data sets will be found in the *output_dir*:
+    6. Outputs, once the staging script is over, the restructured MACSima data sets will be found in the *output_dir*:
 
         - a folder per acquisition group will be created in there.  An acquisition group is an image data set with the same acquisition conditions in terms of rack_number, well_number, roi_number and exposure levels,  in our example there are two such groups, *rack-01-well-B01-roi-001-exp-1* and *rack-01-well-B01-roi-001-exp-2*.  rack, well and roi are extracted from the information in the raw tiles but the exposure level is a ranking from lower to highest exposure time generated by the [macsima2mc](https://github.com/SchapiroLabor/multiplex_macsima/tree/main/macsima2mc) tool.  The actual exposure time in ms can be found in the metadata of the following output.  
 
@@ -49,7 +50,7 @@ The second step is simply the execution of MCMICRO with a specific set of parame
 
         - A file markers.csv inside each acquisition group folder.  This file is a necessary input for the next processing step, which is running MCMICRO.
 
-    7. **Important notes**
+    7. Important notes
 
         - In the staging.sh script provided here, the flag -ic of the macsima2mc script is activated, this means that the tiles will be illumination-corrected when running macsima2mc,i.e. the ome.tiff images in raw are already corrected tiles and the file name will be tagged with the prefix *corr*.  The illumination profiles used for the correction are generated with basicpy [BaSiCPy](https://pypi.org/project/BaSiCPy/).
         - Do not move the markers.csv files to other location, MCMICRO expectes them to be at the same level of the raw folder. 
