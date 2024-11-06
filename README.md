@@ -52,7 +52,7 @@ The second step is simply the execution of MCMICRO with a specific set of parame
 
         ![Screenshot of acquisition group content](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/raw_folder.PNG)
 
-        ![Screenshot of acquisition raw content](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/raw_content.PNG)
+        ![Screenshot of acquisition raw content](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/raw_content.png)
 
         - A file markers.csv inside each acquisition group folder (see figure above).  This file is a necessary input for the next processing step, which is running MCMICRO.
 
