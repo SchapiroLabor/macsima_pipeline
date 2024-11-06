@@ -13,7 +13,8 @@ The second step is simply the execution of MCMICRO with a specific set of parame
 1. **Staging**
 
     1. **Download the container (v1.1.0) of macsima2mc**  with the following command:
-    ``` singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.1.0 
+    ``` 
+    singularity pull docker://ghcr.io/schapirolabor/multiplex_macsima:v1.1.0 
     ```
 
     2. **Create a tab separated sample array file** (e.g. *acquisitions.tsv*) with two columns: ArrayTaskID and Sample.  Each row of the first column is an integer number that represents the TaskID.  The rows of the second column are the absolute path of the folder that contains the **N** cycles of the acquisition.  As of now, the content of this latter folder contains multiple folders with the name x_Cycle**N**.  See the images below for reference of the *acquisitions.tsv* file and the cycles folder, in this representative example we apply the pipeline to the cycles in the folder *mydir/acquisition_A*.
@@ -25,7 +26,7 @@ The second step is simply the execution of MCMICRO with a specific set of parame
 
     3. **Create a directory for the outputs** of macsima2mc, e.g. *output_dir*. 
 
-    4. **Specify the inputs**: open the staging.sh file (see figure below,red arrows) and specify the following inputs:
+    4. **Specify the inputs**, open the staging.sh file (see figure below,red arrows) and specify the following inputs:
 
         - SBATCH --array=1 : range of samples from the ArrayTaskID on which the staging will be applied.  In this example we only have ID 1. If m samples then,```SBATCH --array=1-m```.
 
@@ -71,6 +72,11 @@ The second step is simply the execution of MCMICRO with a specific set of parame
         - segmentation: select the segmentation algorithm to use.  Options are cellpose, mesmer, ilastik,unmicst.
        
         2. options:
+
+        - segmentation: arguments of the selected segmentation algorithm in the workflow section.  In this example we use those corresponding to cellpose.
+        - ashlar: arguments of the registration and stitching algorithm.  For MACSima data it is important to provide in this section the argument  ``` --flip-y```, this is to account for the positions of the tile provided in an inverted y-axis.
+
+
 
 
     
