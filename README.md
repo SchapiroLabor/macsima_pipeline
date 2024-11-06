@@ -85,7 +85,7 @@ The second step is simply the execution of MCMICRO with a specific set of parame
         - segmentation: arguments of the selected segmentation algorithm in the workflow section.  In this example we use those corresponding to cellpose.
         - ashlar: arguments of the registration and stitching algorithm.  For MACSima data it is important to provide in this section the argument  ``` --flip-y```, this is to account for the positions of the tile provided in an inverted y-axis.
 
-        ![Screenshot of params.yml](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/params_yml.PNG)
+        ![Screenshot of params.yml](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/samples_tsv.PNG)
 
     3. Open the macsima_job.sh file, give the path to the singularity.config file, to the params.yml file and the samples.tsv file.  Sabe the changes and run the job.
     ``` 
