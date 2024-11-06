@@ -58,13 +58,22 @@ The second step is simply the execution of MCMICRO with a specific set of parame
 
     1. Create a sample array (*samples.tsv*) with the paths to the folders of the acquisition groups that will be processed with MCMICRO.  Those folders are the output of the staging process described above.
 
-    2. Download the params.yml file provided here and specify the parameters used for the processing:
-        - start-at: registration. Start at any point at or after registration, never start from illumination.
+    2. Download the params.yml file provided here and specify the parameters used for the processing.  The parameters are divided in 2 sections workflow and options.  The first one determines the general flow of the workflow,i.e.  steps to execute and algorithms to use in those steps. 
+    In the second section the user specifies the arguments to be used for the selected algorithms, this arguments are the same ones available by the CLI of the algorithm.  The CLI of each tool should be consulted in the documentation of that particular tool, as example we show how the CLI documentation of [cellpose](https://cellpose.readthedocs.io/en/latest/cli.html) and [ashlar](https://github.com/labsyspharm/ashlar?search=1).
+
+        1. workflow: 
+
+        - start-at: Start at registration, dont use the illumination option.
         - stop-at: Options are registration, background, segmentation, quantification and downstream.  Select at which of those options the processing will stop.
         - background: true 
-        - segmentation-channel: 4. Specify the index or indices of the channels to be used for segmentation (1-based index).  According to our markers.csv, DAPI can be found on channel number 4 and 11.
-        - segmentation-recyze: true.  If true, only the channels specified in segmentation-channel will be ingested by the segmentation algorithm.
-  segmentation: cellpose
+        - segmentation-channel: Specify the index or indices of the channels to be used for segmentation (1-based index).  According to our markers.csv, DAPI can be found on channel number 4 and 11.
+        - segmentation-recyze: true or false.  If true, only the channels specified in segmentation-channel will be ingested by the segmentation algorithm.
+        - segmentation: select the segmentation algorithm to use.  Options are cellpose, mesmer, ilastik,unmicst.
+       
+        2. options:
+
+
+    
 
 
 
