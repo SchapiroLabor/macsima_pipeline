@@ -67,6 +67,7 @@ The second step is simply the execution of MCMICRO with a specific set of parame
 2. **Execution of MCMICRO**
 
     1. Create a sample array (*samples.tsv*) with the paths to the folders of the acquisition groups that will be processed with MCMICRO.  Those folders are the output of the staging process described above.
+    ![Screenshot of samples](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/samples_tsv.PNG)
 
     2. Download the params.yml file provided here and specify the parameters used for the processing.  The parameters are divided in 2 sections workflow and options.  The first one determines the general flow of the workflow,i.e.  steps to execute and algorithms to use in those steps. 
     In the second section the user specifies the arguments to be used for the selected algorithms, this arguments are the same ones available by the CLI of the algorithm.  The CLI of each tool should be consulted in the documentation of that particular tool, as example we show how the CLI documentation of [cellpose](https://cellpose.readthedocs.io/en/latest/cli.html) and [ashlar](https://github.com/labsyspharm/ashlar?search=1).
@@ -85,13 +86,13 @@ The second step is simply the execution of MCMICRO with a specific set of parame
         - segmentation: arguments of the selected segmentation algorithm in the workflow section.  In this example we use those corresponding to cellpose.
         - ashlar: arguments of the registration and stitching algorithm.  For MACSima data it is important to provide in this section the argument  ``` --flip-y```, this is to account for the positions of the tile provided in an inverted y-axis.
 
-        ![Screenshot of params.yml](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/samples_tsv.PNG)
+        ![Screenshot of params.yml](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/params_yml.PNG)
 
     3. Open the macsima_job.sh file, give the path to the singularity.config file, to the params.yml file and the samples.tsv file.  Sabe the changes and run the job.
     ``` 
     sbatch macsima_job.sh
     ``` 
-
+    ![Screenshot of macsima_job](https://github.com/SchapiroLabor/macsima_pipeline/blob/main/figs/macsima_job.png)
 
 
 
