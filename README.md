@@ -13,7 +13,7 @@ The second step is simply the execution of MCMICRO with a specific set of parame
 
 1. **Staging**
 
-    1. Download the container (v1.1.0) of macsima2mc  with the following command:
+    1. Download the container of macsima2mc  with the following command:
     ``` 
     singularity pull docker://ghcr.io/schapirolabor/macsima2mc:v1.1.1 
     ```
