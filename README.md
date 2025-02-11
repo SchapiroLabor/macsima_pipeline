@@ -15,7 +15,7 @@ The second step is simply the execution of MCMICRO with a specific set of parame
 
     1. Download the container of macsima2mc  with the following command:
     ``` 
-    singularity pull docker://ghcr.io/schapirolabor/macsima2mc:v1.1.1 
+    singularity pull docker://ghcr.io/schapirolabor/macsima2mc:latest 
     ```
 
     2. Create a tab separated sample array file (e.g. *acquisitions.tsv*) with two columns: ArrayTaskID and Sample.  Each row of the first column is an integer number that represents the TaskID.  The rows of the second column are the absolute path of the folder that contains the *N* cycles of the acquisition.  As of now, the content of this latter folder contains multiple folders with the name x_Cycle*N*.  See the images below for reference of the *acquisitions.tsv* file and the cycles folder, in this representative example we apply the pipeline to the cycles in the folder *mydir/acquisition_A*.
